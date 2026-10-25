@@ -66,7 +66,9 @@ func main(){
 	}
 
 	for index, entry := range directorys {
-		fmt.Println(index,":",entry);
+		if !entry.IsDir() {
+			fmt.Println(index,":",entry);
+		}
 	}
 
 }
