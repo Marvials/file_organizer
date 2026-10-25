@@ -24,7 +24,7 @@ func main(){
 	if len(args) == 1 {
 		fmt.Println();
 		if !strings.ContainsAny( string(args[0]), "=") {
-			fmt.Println("Please provide a path to organizer.");
+			fmt.Println("Please provide a path to organize.");
 		    return
 		}
 		
@@ -32,7 +32,7 @@ func main(){
 		pathProvided  := args[0][indexOfEqual+1:]
 
 		if strings.TrimSpace(pathProvided) == "" {
-			fmt.Println("Please provide a path to organizer.");
+			fmt.Println("Please provide a path to organize.");
 			return
 		}
 	}
@@ -42,7 +42,7 @@ func main(){
 
 	file, err := os.Open(*organizer)
 	if err != nil {
-		fmt.Println("An error occurrend with the path provided:", err)
+		fmt.Println("An error occurrend with the provided path:", err)
 		return
 	}
 	defer file.Close()
@@ -50,16 +50,23 @@ func main(){
 	//Get information of the file.
 	fileInfo, err := file.Stat();
 	if err != nil {
-		fmt.Println("An error occurred while getting the file stat.", err);
+		fmt.Println("An error occurred while getting the file information:", err);
 		return
 	}
 
 	//check whether the path points to a direcotry or a file
 	if !fileInfo.IsDir() {
-		fmt.Println("The path provided is not a directory");
+		fmt.Println("The provided path is not a directory");
 		return
 	}
 
+	directorys, err := os.ReadDir(*organizer);
+	if err != nil {
+		fmt.Println("An error occurred while reading the directory:", err)
+	}
 
-	fmt.Println("Organizer:", *organizer);
+	for index, entry := range directorys {
+		fmt.Println(index,":",entry);
+	}
+
 }
